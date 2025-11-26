@@ -1,0 +1,102 @@
+﻿<Window x:Class="TaskManagementApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskManagementApp"
+        mc:Ignorable="d"
+        Title="Taskify" Height="400" Width="790" 
+        Background="AliceBlue">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#6200EE"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3700B3"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#3700B3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="#333333"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <Label Content="Поиск:"/>
+                    <TextBox Name="SearchTextBox" Width="200" TextChanged="SearchTextBox_TextChanged"/>
+                </StackPanel>
+                <ComboBox Name="FilterComboBox" Width="150" SelectionChanged="FilterComboBox_SelectionChanged" Margin="5,0,10,0" Height="41">
+                    <ComboBoxItem Content="Все"/>
+                    <ComboBoxItem Content="Выполненые"/>
+                    <ComboBoxItem Content="Не выполненые"/>
+                </ComboBox>
+                <Button Content="Добавить задачу" Click="AddTask_Click" Height="45" Width="129" />
+                <Button Content="Изменить задачу" Click="EditTask_Click" Height="46" Width="117" />
+                <Button Content="Удалить задачу" Click="DeleteTask_Click" Height="41" Width="112" />
+            </StackPanel>
+            <ListView Name="TaskListView" Margin="0,10,0,0" SelectionChanged="TaskListView_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Название" Width="200" 
+                                        DisplayMemberBinding="{Binding Title}" />
+                        <GridViewColumn Header="Описание" Width="300" 
+                                        DisplayMemberBinding="{Binding Description}" />
+                        <GridViewColumn Header="Срок выполнения" Width="100" 
+                                        DisplayMemberBinding="{Binding DueDate}" />
+                        <GridViewColumn Header="Выполнена/не выполнена" Width="100" 
+                                        DisplayMemberBinding="{Binding IsCompleted}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>
